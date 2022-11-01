@@ -1,4 +1,7 @@
-﻿namespace HumanResource.Extensions
+﻿using HumanResource.Infrastructure;
+using LoggerService;
+
+namespace HumanResource.Extensions
 {
     public static class ServiceExtensions
     {
@@ -6,7 +9,7 @@
         {
             services.AddCors(opstion =>
             {
-                opstion.AddPolicy("CorePolicy", builder =>
+                opstion.AddPolicy("CorsPolicy", builder =>
                 {
                     builder.AllowAnyOrigin()
                         .AllowAnyMethod()
@@ -20,6 +23,11 @@
             {
 
             });    
+        }
+
+        public static void ConfigureLoggerService(this IServiceCollection services)
+        {
+            services.AddScoped<ILoggerManager, LoggerManager>();
         }
     }
 }
