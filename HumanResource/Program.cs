@@ -24,7 +24,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();
-app.UseCors("CorePolicy");
+app.UseCors("CorsPolicy");
 app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
     ForwardedHeaders= ForwardedHeaders.All
