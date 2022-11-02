@@ -5,7 +5,7 @@ namespace Entities.Models
     public class Company
     {
         [Column("CompanyId")]
-        public string Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required(ErrorMessage ="Company nam is required field.")]
         [MaxLength(60, ErrorMessage ="Maximum length for the name is 60 character.")]
