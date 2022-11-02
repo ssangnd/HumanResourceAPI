@@ -8,8 +8,8 @@ namespace Entities.Models
         {
         }
 
-        [Column("CompanyId")]
-        public Guid Id { get; set; }
+        //[Column("CompanyId")]
+        //public Guid Id { get; set; }
 
         [Required(ErrorMessage ="Company nam is required field.")]
         [MaxLength(60, ErrorMessage ="Maximum length for the name is 60 character.")]

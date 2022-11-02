@@ -9,8 +9,8 @@ namespace Entities.Models
         {
         }
 
-        [Column("EmployeeId")]
-        public Guid Id { get; set; }
+        //[Column("EmployeeId")]
+        //public Guid Id { get; set; }
 
         [Required(ErrorMessage = "First Name is required.")]
         [MaxLength(20,ErrorMessage ="Maximum length for the First Name is 20 characters.")]

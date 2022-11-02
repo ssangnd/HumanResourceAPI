@@ -30,6 +30,7 @@ namespace Repository
 
                     return _companyRepository;
                 }
+                return null;
             }
         }
 
@@ -42,6 +43,7 @@ namespace Repository
                     _employeeRepository = new EmployeeRepository(_dbContext);
                     return _employeeRepository;
                 }
+                return null;
             }
         }
     }
