@@ -42,7 +42,9 @@ namespace HumanResource.Extensions
 
         public static void ConfigureRepository(this IServiceCollection services)
         {
-            services.AddTransient(typeof(IRepositoryBase<,>), typeof(RepositoryBase<,>));
+            services.AddTransient(typeof(IRepositoryBase<,>), typeof(RepositoryBase<,>))
+                .AddTransient<IRepositoryManager, RepositoryManager>()
+                ;
         }
 
     }

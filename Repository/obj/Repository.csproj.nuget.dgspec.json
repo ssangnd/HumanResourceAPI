@@ -93,7 +93,11 @@
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "D:\\HumanResource\\Entities\\Entities.csproj": {
+                "projectPath": "D:\\HumanResource\\Entities\\Entities.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
