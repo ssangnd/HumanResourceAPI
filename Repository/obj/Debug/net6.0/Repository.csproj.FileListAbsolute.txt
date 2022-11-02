@@ -1,0 +1,17 @@
+D:\HumanResource\Repository\bin\Debug\net6.0\Repository.deps.json
+D:\HumanResource\Repository\bin\Debug\net6.0\Repository.dll
+D:\HumanResource\Repository\bin\Debug\net6.0\Repository.pdb
+D:\HumanResource\Repository\bin\Debug\net6.0\Entities.dll
+D:\HumanResource\Repository\bin\Debug\net6.0\HumanResource.Infrastructure.dll
+D:\HumanResource\Repository\bin\Debug\net6.0\Entities.pdb
+D:\HumanResource\Repository\bin\Debug\net6.0\HumanResource.Infrastructure.pdb
+D:\HumanResource\Repository\obj\Debug\net6.0\Repository.csproj.AssemblyReference.cache
+D:\HumanResource\Repository\obj\Debug\net6.0\Repository.GeneratedMSBuildEditorConfig.editorconfig
+D:\HumanResource\Repository\obj\Debug\net6.0\Repository.AssemblyInfoInputs.cache
+D:\HumanResource\Repository\obj\Debug\net6.0\Repository.AssemblyInfo.cs
+D:\HumanResource\Repository\obj\Debug\net6.0\Repository.csproj.CoreCompileInputs.cache
+D:\HumanResource\Repository\obj\Debug\net6.0\Repository.csproj.CopyComplete
+D:\HumanResource\Repository\obj\Debug\net6.0\Repository.dll
+D:\HumanResource\Repository\obj\Debug\net6.0\refint\Repository.dll
+D:\HumanResource\Repository\obj\Debug\net6.0\Repository.pdb
+D:\HumanResource\Repository\obj\Debug\net6.0\ref\Repository.dll

@@ -3,8 +3,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Entities.Models
 {
-    public class Employee
+    public class Employee: DomainEntity<Guid>
     {
+        public Employee(Guid id) : base(id)
+        {
+        }
+
         [Column("EmployeeId")]
         public Guid Id { get; set; }
 

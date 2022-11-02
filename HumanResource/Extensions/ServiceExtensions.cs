@@ -2,6 +2,7 @@
 using HumanResource.Infrastructure;
 using LoggerService;
 using Microsoft.EntityFrameworkCore;
+using Repository;
 
 namespace HumanResource.Extensions
 {
@@ -37,6 +38,11 @@ namespace HumanResource.Extensions
             services.AddDbContext<AppDbContext>(opts => 
             opts.UseSqlServer(configuration.GetConnectionString("sqlConnection"),
             b=>b.MigrationsAssembly("HumanResource")));
+        }
+
+        public static void ConfigureRepository(this IServiceCollection services)
+        {
+            services.AddTransient(typeof(IRepositoryBase<,>), typeof(RepositoryBase<,>));
         }
 
     }

@@ -1,4 +1,5 @@
-﻿using HumanResource.Infrastructure;
+﻿using Entities.Models;
+using HumanResource.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HumanResource.Controllers
@@ -8,18 +9,21 @@ namespace HumanResource.Controllers
     public class TestController : ControllerBase
     {
         private readonly ILoggerManager _logger;
+        private IRepositoryBase<Company, Guid> _companyRepository;
 
-        public TestController(ILoggerManager logger)
+        public TestController(ILoggerManager logger, IRepositoryBase<Company, Guid> companyRepository)
         {
             _logger = logger;
+            _companyRepository = companyRepository;
         }
 
-     
+
         [HttpGet]
-        public string GetText()
+        public List<Company> GetText()
         {
-            _logger.LogInfo("This is message from Weather Controller");
-            return "Hello";
+            //_logger.LogInfo("This is message from Weather Controller");
+            var result = _companyRepository.FindAll(false).ToList();
+            return result;
         }
     }
 }
