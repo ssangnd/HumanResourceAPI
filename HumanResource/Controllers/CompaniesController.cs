@@ -1,4 +1,6 @@
-﻿using HumanResource.Infrastructure;
+﻿using AutoMapper;
+using Entities.DTOs;
+using HumanResource.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HumanResource.Controllers
@@ -9,10 +11,13 @@ namespace HumanResource.Controllers
     {
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
-        public CompaniesController(IRepositoryManager repository, ILoggerManager logger)
+        private readonly IMapper _mapper;
+
+        public CompaniesController(IRepositoryManager repository, ILoggerManager logger, IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
+            _mapper = mapper;
         }
 
 
@@ -22,7 +27,15 @@ namespace HumanResource.Controllers
             try
             {
                 var companies = _repository.Company.FindAll(false);
-                return Ok(companies);
+                //var companiesDto = companies.Select(c => new CompanyDto
+                //{
+                //    Id = c.Id,
+                //    Name = c.Name,
+                //    FullAddress = string.Join(" ", c.Address, c.Country)
+                //}).ToList();
+                var companiesDto = _mapper.Map<IEnumerable<CompanyDto>>(companies);
+
+                return Ok(companiesDto);
             }catch(Exception ex)
             {
                 _logger.LogError($"Error at: {nameof(GetCompanies)} action {ex}");
