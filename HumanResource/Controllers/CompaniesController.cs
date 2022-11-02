@@ -43,6 +43,22 @@ namespace HumanResource.Controllers
             }
         }
 
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetCompany(Guid id)
+        {
+            var company = await _repository.Company.FindByIdAsync(id);
+            if (company == null)
+            {
+                _logger.LogInfo($"Company with id: {id} doesn't exist in the database.");
+                return NotFound();
+            }
+            else
+            {
+                var companyDto = _mapper.Map<CompanyDto>(company);
+                return Ok(companyDto);
+            }
+        }
+
 
     }
 }
