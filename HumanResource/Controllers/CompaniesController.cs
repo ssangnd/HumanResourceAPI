@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Entities.DTOs;
+using Entities.Models;
 using HumanResource.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,6 +13,13 @@ namespace HumanResource.Controllers
         private readonly IRepositoryManager _repository;
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
+
+        private static class RouteNames
+        {
+            public const string GetCompanies = nameof(GetCompanies);
+            public const string GetCompanyById = nameof(GetCompanyById);
+            public const string CreateCompany = nameof(CreateCompany);
+        }
 
         public CompaniesController(IRepositoryManager repository, ILoggerManager logger, IMapper mapper)
         {
@@ -43,7 +51,7 @@ namespace HumanResource.Controllers
             }
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name =RouteNames.GetCompanyById),]
         public async Task<IActionResult> GetCompany(Guid id)
         {
             var company = await _repository.Company.FindByIdAsync(id);
@@ -58,6 +66,23 @@ namespace HumanResource.Controllers
                 return Ok(companyDto);
             }
         }
+
+
+        [HttpPost(Name =RouteNames.CreateCompany)]
+        public async Task<IActionResult> CreateCompany([FromBody] CompanyCreationDto company)
+        {
+            if (company == null)
+            {
+                _logger.LogError("CompanyCreationDto object sent from client is null");
+                return BadRequest("CompanyCreationDto object is null");
+            }
+
+            var companyEntity = _mapper.Map<Company>(company);
+            _repository.Company.Create(companyEntity);
+            var companyToReturn = _mapper.Map<CompanyDto>(companyEntity);
+            return CreatedAtRoute(RouteNames.GetCompanyById, new { id = companyToReturn.Id }, companyToReturn);
+        }
+
 
 
     }
