@@ -4,10 +4,7 @@ namespace Entities.Models
 {
     public class Company: DomainEntity<Guid>
     {
-        public Company(Guid id) : base(id)
-        {
-        }
-
+        
         //[Column("CompanyId")]
         //public Guid Id { get; set; }
 

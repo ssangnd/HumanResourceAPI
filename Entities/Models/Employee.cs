@@ -5,10 +5,6 @@ namespace Entities.Models
 {
     public class Employee: DomainEntity<Guid>
     {
-        public Employee(Guid id) : base(id)
-        {
-        }
-
         //[Column("EmployeeId")]
         //public Guid Id { get; set; }
 
