@@ -25,12 +25,11 @@ namespace Repository
             get
             { 
                 if (_companyRepository == null)
-                {
-                    _companyRepository = new CompanyRepository(_dbContext);
+                
+                _companyRepository = new CompanyRepository(_dbContext);
 
-                    return _companyRepository;
-                }
-                return null;
+                return _companyRepository;
+                
             }
         }
 
@@ -39,12 +38,15 @@ namespace Repository
             get
             {
                 if (_employeeRepository == null)
-                {
-                    _employeeRepository = new EmployeeRepository(_dbContext);
-                    return _employeeRepository;
-                }
-                return null;
+                _employeeRepository = new EmployeeRepository(_dbContext);
+                return _employeeRepository;
+                
             }
+        }
+
+        public  async Task SaveAsync()
+        {
+            await _dbContext.SaveChangesAsync();
         }
     }
 }

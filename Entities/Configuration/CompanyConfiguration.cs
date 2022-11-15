@@ -11,14 +11,14 @@ namespace Entities.Configuration
         public void Configure(EntityTypeBuilder<Company> builder)
         {
             builder.HasData(
-                new Company(Guid.NewGuid())
+                new Company()
                 {
                     Id = Guid.NewGuid(),
                     Name = "FPT Software",
                     Address = "Thu Duc, HCM, VN",
                     Country = "Viet Nam"
                 },
-                new Company(Guid.NewGuid())
+                new Company()
                 {
                     Id = Guid.NewGuid(),
                     Name = "VinGroup",

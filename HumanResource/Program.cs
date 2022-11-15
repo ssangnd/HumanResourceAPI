@@ -13,6 +13,12 @@ builder.Services.ConfigureLoggerService();
 builder.Services.ConfigureContext(builder.Configuration);
 builder.Services.ConfigureRepository();
 builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddControllers(config =>
+{
+    config.RespectBrowserAcceptHeader = true;
+    config.ReturnHttpNotAcceptable = true;
+}).AddNewtonsoftJson()
+    .AddXmlDataContractSerializerFormatters();
 
 
 builder.Services.AddControllers();

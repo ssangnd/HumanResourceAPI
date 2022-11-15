@@ -2,6 +2,7 @@
 using Entities.DTOs;
 using Entities.Models;
 using HumanResource.Infrastructure;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HumanResource.Controllers
@@ -44,14 +45,14 @@ namespace HumanResource.Controllers
                 var companiesDto = _mapper.Map<IEnumerable<CompanyDto>>(companies);
 
                 return Ok(companiesDto);
-            }catch(Exception ex)
+            } catch (Exception ex)
             {
                 _logger.LogError($"Error at: {nameof(GetCompanies)} action {ex}");
                 return StatusCode(500, "Internal server error");
             }
         }
 
-        [HttpGet("{id}", Name =RouteNames.GetCompanyById),]
+        [HttpGet("{id}", Name = RouteNames.GetCompanyById),]
         public async Task<IActionResult> GetCompany(Guid id)
         {
             var company = await _repository.Company.FindByIdAsync(id);
@@ -68,7 +69,7 @@ namespace HumanResource.Controllers
         }
 
 
-        [HttpPost(Name =RouteNames.CreateCompany)]
+        [HttpPost(Name = RouteNames.CreateCompany)]
         public async Task<IActionResult> CreateCompany([FromBody] CompanyCreationDto company)
         {
             if (company == null)
@@ -79,10 +80,74 @@ namespace HumanResource.Controllers
 
             var companyEntity = _mapper.Map<Company>(company);
             _repository.Company.Create(companyEntity);
+            await _repository.SaveAsync();
             var companyToReturn = _mapper.Map<CompanyDto>(companyEntity);
             return CreatedAtRoute(RouteNames.GetCompanyById, new { id = companyToReturn.Id }, companyToReturn);
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteCompany(Guid id)
+        {
+            var company = await _repository.Company.FindByIdAsync(id);
+            if (company == null)
+            {
+                _logger.LogInfo($"Company with id:{id} doesn't exist in the database");
+                return NotFound();
+            }
+
+            _repository.Company.Delete(company);
+            await _repository.SaveAsync();
+            return NoContent();
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCompany(Guid id,[FromBody] CompanyUpdatingDto company)
+        {
+            if (company == null)
+            {
+                _logger.LogError("CompanyUpdatingDto object sent from client is null");
+                return BadRequest("CompanyUpdatingDto object is null");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError("Invalid model state for the CompanyUpdatingDto object");
+                return UnprocessableEntity(ModelState);
+            }
+
+            var companyEntity = await _repository.Company.FindByIdAsync(id);
+            if(companyEntity==null)
+            {
+                _logger.LogInfo($"Company with the id:${id} doesn't exist in the database.");
+                return NotFound();
+            }
+            _mapper.Map(company, companyEntity);
+            await _repository.SaveAsync();
+            return NoContent();
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> PartiallyUpdateCompany(Guid id, [FromBody] 
+        JsonPatchDocument<CompanyUpdatingDto> patchDoc)
+        {
+            if (patchDoc == null)
+            {
+                _logger.LogError("patch object sent from client is null");
+                return BadRequest("patchDoc object is null");
+            }
+            var companyEntity = await _repository.Company.FindByIdAsync(id);
+            if (companyEntity == null)
+            {
+                _logger.LogInfo($"company with id:{id} doesn't exist in the database.");
+                return NotFound();
+            }
+
+            var companyToPatch = _mapper.Map<CompanyUpdatingDto>(companyEntity);
+            patchDoc.ApplyTo(companyToPatch);
+            _mapper.Map(companyToPatch, companyEntity);
+            await _repository.SaveAsync();
+            return NoContent();
+        }
 
 
     }

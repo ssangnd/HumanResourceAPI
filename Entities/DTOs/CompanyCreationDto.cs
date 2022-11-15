@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Entities.DTOs
 {
-   public class CompanyCreationDto
+   public class CompanyCreationDto : CompanyManipulationDto
     {
         [Required(ErrorMessage ="Company name is a required field.")]
         [MaxLength(60,ErrorMessage ="Maximax length for the Name is 60 characters.")]

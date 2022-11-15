@@ -49,14 +49,14 @@ namespace HumanResource.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("79e6e443-850f-433c-bb54-9975354a20d1"),
+                            Id = new Guid("85088a3d-3096-4f16-8bd2-5ff637332272"),
                             Address = "Thu Duc, HCM, VN",
                             Country = "Viet Nam",
                             Name = "FPT Software"
                         },
                         new
                         {
-                            Id = new Guid("f111ee9c-b0dc-4c73-8c0c-d8b78c6b52f1"),
+                            Id = new Guid("848934c5-5904-4ddb-aba1-797e558e9a03"),
                             Address = "Ha Noi, VN",
                             Country = "Viet Nam",
                             Name = "VinGroup"

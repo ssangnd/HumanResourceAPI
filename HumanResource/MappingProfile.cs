@@ -13,6 +13,7 @@ namespace HumanResource
                 opt.MapFrom(x => string.Join("", x.Address,x.Country)));
 
             CreateMap<CompanyCreationDto, Company>();
+            CreateMap<CompanyUpdatingDto, Company>().ReverseMap();
         }
     }
 }
