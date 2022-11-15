@@ -49,14 +49,14 @@ namespace HumanResource.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("85088a3d-3096-4f16-8bd2-5ff637332272"),
+                            Id = new Guid("560df0c5-e269-43f6-b013-16981e6a41e7"),
                             Address = "Thu Duc, HCM, VN",
                             Country = "Viet Nam",
                             Name = "FPT Software"
                         },
                         new
                         {
-                            Id = new Guid("848934c5-5904-4ddb-aba1-797e558e9a03"),
+                            Id = new Guid("4232e8f0-2a87-4c2e-aa9b-7b549f79e94f"),
                             Address = "Ha Noi, VN",
                             Country = "Viet Nam",
                             Name = "VinGroup"
@@ -83,7 +83,7 @@ namespace HumanResource.Migrations
                     b.Property<Guid>("CompanyId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("FistName")
+                    b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");

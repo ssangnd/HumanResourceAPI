@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HumanResource.Migrations
 {
-    public partial class InitDb : Migration
+    public partial class SangND_Employee_FirstName : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,7 +28,7 @@ namespace HumanResource.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FistName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Age = table.Column<int>(type: "int", nullable: false),
@@ -46,6 +46,16 @@ namespace HumanResource.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "Companies",
+                columns: new[] { "Id", "Address", "Country", "Name" },
+                values: new object[] { new Guid("4232e8f0-2a87-4c2e-aa9b-7b549f79e94f"), "Ha Noi, VN", "Viet Nam", "VinGroup" });
+
+            migrationBuilder.InsertData(
+                table: "Companies",
+                columns: new[] { "Id", "Address", "Country", "Name" },
+                values: new object[] { new Guid("560df0c5-e269-43f6-b013-16981e6a41e7"), "Thu Duc, HCM, VN", "Viet Nam", "FPT Software" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_CompanyId",

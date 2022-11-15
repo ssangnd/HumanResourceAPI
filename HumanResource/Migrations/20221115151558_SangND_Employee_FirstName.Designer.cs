@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HumanResource.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20221102125512_InitDb")]
-    partial class InitDb
+    [Migration("20221115151558_SangND_Employee_FirstName")]
+    partial class SangND_Employee_FirstName
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,6 +47,22 @@ namespace HumanResource.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Companies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("560df0c5-e269-43f6-b013-16981e6a41e7"),
+                            Address = "Thu Duc, HCM, VN",
+                            Country = "Viet Nam",
+                            Name = "FPT Software"
+                        },
+                        new
+                        {
+                            Id = new Guid("4232e8f0-2a87-4c2e-aa9b-7b549f79e94f"),
+                            Address = "Ha Noi, VN",
+                            Country = "Viet Nam",
+                            Name = "VinGroup"
+                        });
                 });
 
             modelBuilder.Entity("Entities.Models.Employee", b =>
@@ -69,7 +85,7 @@ namespace HumanResource.Migrations
                     b.Property<Guid>("CompanyId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("FistName")
+                    b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(20)
                         .HasColumnType("nvarchar(20)");
