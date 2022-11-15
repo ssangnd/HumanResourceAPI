@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Entities.DTOs;
 using Entities.Models;
+using Entities.RequestFeature;
 using HumanResource.Infrastructure;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
@@ -31,17 +32,19 @@ namespace HumanResource.Controllers
 
 
         [HttpGet]
-        public IActionResult GetCompanies()
+        public async Task<IActionResult> GetCompanies([FromQuery] CompanyParameters companyParameters)
         {
             try
             {
-                var companies = _repository.Company.FindAll(false);
+                //var companies = _repository.Company.FindAll(false);
                 //var companiesDto = companies.Select(c => new CompanyDto
                 //{
                 //    Id = c.Id,
                 //    Name = c.Name,
                 //    FullAddress = string.Join(" ", c.Address, c.Country)
                 //}).ToList();
+
+                var companies = await _repository.Company.GetCompaniesAsync(companyParameters, false);
                 var companiesDto = _mapper.Map<IEnumerable<CompanyDto>>(companies);
 
                 return Ok(companiesDto);
