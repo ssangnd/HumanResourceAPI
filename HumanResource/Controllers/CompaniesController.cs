@@ -148,6 +148,14 @@ namespace HumanResource.Controllers
             }
 
             var companyToPatch = _mapper.Map<CompanyUpdatingDto>(companyEntity);
+
+            TryValidateModel(companyToPatch);
+            if (!ModelState.IsValid)
+            {
+                _logger.LogError("Inlid model state for the patch document");
+                return UnprocessableEntity(ModelState);
+            }
+
             patchDoc.ApplyTo(companyToPatch);
             _mapper.Map(companyToPatch, companyEntity);
             await _repository.SaveAsync();
