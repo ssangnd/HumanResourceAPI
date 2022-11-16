@@ -1,7 +1,9 @@
 ﻿using Entities;
+using Entities.Models;
 using HumanResource.Controllers;
 using HumanResource.Infrastructure;
 using LoggerService;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc.Versioning.Conventions;
 using Microsoft.EntityFrameworkCore;
@@ -79,6 +81,22 @@ namespace HumanResource.Extensions
                 //opt.Conventions.Controller<CompaniesV2Controller>().HasApiVersion(2, 0);
             });
             services.AddApiVersioning();
+        }
+
+        public static void ConfigureIdentity(this IServiceCollection services)
+        {
+            var builder = services.AddIdentityCore<User>(o =>
+            {
+                o.Password.RequireDigit = true;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireUppercase = false;
+                o.Password.RequireNonAlphanumeric = false;
+                o.Password.RequiredLength = 10;
+                o.User.RequireUniqueEmail = true;
+            });
+
+            builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), builder.Services);
+            builder.AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
         }
     }
 }

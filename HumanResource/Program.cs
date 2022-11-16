@@ -15,6 +15,7 @@ builder.Services.ConfigureContext(builder.Configuration);
 builder.Services.ConfigureRepository();
 builder.Services.ConfigureSwgger();
 builder.Services.ConfigureVersioning();
+builder.Services.ConfigureIdentity();
 
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>
@@ -57,6 +58,7 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 });
 app.UseRouting();
 
+app.UseAuthorization();
 app.UseAuthorization();
 
 app.UseSwagger();
