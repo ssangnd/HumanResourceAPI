@@ -8,6 +8,10 @@ namespace Entities.RequestFeature
 {
     public class EmployeeParameters:RequestParameters
     {
+        public EmployeeParameters()
+        {
+            OrderBy = "FirstName";
+        }
         public int minAge { get; set; }
         public int maxAge { get; set; } = int.MaxValue;
         public bool ValidAgeRange => maxAge > minAge;
