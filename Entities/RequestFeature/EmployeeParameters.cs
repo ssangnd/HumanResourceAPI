@@ -11,5 +11,6 @@ namespace Entities.RequestFeature
         public int minAge { get; set; }
         public int maxAge { get; set; } = int.MaxValue;
         public bool ValidAgeRange => maxAge > minAge;
+        public string SearchTerm { get; set; }
     }
 }
