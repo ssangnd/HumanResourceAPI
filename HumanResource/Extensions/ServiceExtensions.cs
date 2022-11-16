@@ -1,7 +1,11 @@
 ﻿using Entities;
+using HumanResource.Controllers;
 using HumanResource.Infrastructure;
 using LoggerService;
+using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.AspNetCore.Mvc.Versioning.Conventions;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using Repository;
 
 namespace HumanResource.Extensions
@@ -47,5 +51,34 @@ namespace HumanResource.Extensions
                 ;
         }
 
+        public static void ConfigureSwgger(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(s =>
+            {
+                s.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Title = "Human Resource API",
+                    Version = "v1"
+                });
+                s.SwaggerDoc("v2", new OpenApiInfo
+                {
+                    Title = "Human Resource API",
+                    Version = "v2"
+                });
+            });
+        }
+        public static void ConfigureVersioning(this IServiceCollection services)
+        {
+            services.AddApiVersioning(opt =>
+            {
+                opt.ReportApiVersions = true;//save versioning reponse header
+                opt.AssumeDefaultVersionWhenUnspecified = true;//if not assume 2 auto 1
+                opt.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+                opt.ApiVersionReader = new HeaderApiVersionReader("api-version");
+                //opt.Conventions.Controller<CompaniesController>().HasApiVersion(1, 0);
+                //opt.Conventions.Controller<CompaniesV2Controller>().HasApiVersion(2, 0);
+            });
+            services.AddApiVersioning();
+        }
     }
 }

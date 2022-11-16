@@ -13,12 +13,17 @@ builder.Services.ConfigureIISIntegration();
 builder.Services.ConfigureLoggerService();
 builder.Services.ConfigureContext(builder.Configuration);
 builder.Services.ConfigureRepository();
-builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.ConfigureSwgger();
+builder.Services.ConfigureVersioning();
+
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>
 {
     options.SuppressModelStateInvalidFilter = true;
 });
+builder.Services.AddAutoMapper(typeof(Program));
+
+
 
 builder.Services.AddControllers(config =>
 {
@@ -31,16 +36,16 @@ builder.Services.AddControllers(config =>
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+//builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
 
 app.UseHttpsRedirection();
 
@@ -50,9 +55,21 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 {
     ForwardedHeaders= ForwardedHeaders.All
 });
+app.UseRouting();
 
 app.UseAuthorization();
 
+app.UseSwagger();
+app.UseSwaggerUI(s =>
+{
+    s.SwaggerEndpoint("/swagger/v1/swagger.json", "Human Resource API v1");
+    s.SwaggerEndpoint("/swagger/v2/swagger.json", "Human Resource API v2");
+});
+
 app.MapControllers();
+//app.UseEndpoints(endpoints =>
+//{
+//    endpoints.MapControllers();
+//});
 
 app.Run();

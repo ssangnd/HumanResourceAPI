@@ -13,6 +13,9 @@ namespace Repository
 
         }
 
+        public async Task<IEnumerable<Company>> GetAllComnpanies(bool trackChanges) =>
+            await FindAll(trackChanges).OrderBy(c => c.Name).ToListAsync();
+
         public async Task<PagedList<Company>> GetCompaniesAsync(CompanyParameters companyParameters, bool trackChange)
         {
             var companyItems = await FindAll(trackChange)

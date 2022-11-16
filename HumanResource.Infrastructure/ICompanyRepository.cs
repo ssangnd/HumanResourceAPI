@@ -5,6 +5,8 @@ namespace HumanResource.Infrastructure
 {
     public interface ICompanyRepository: IRepositoryBase<Company,Guid>
     {
-        Task<PagedList<Company>> GetCompaniesAsync(CompanyParameters companyParameters, bool trackChange);
+        Task<IEnumerable<Company>> GetAllComnpanies(bool trackChanges);
+        Task<PagedList<Company>> GetCompaniesAsync(CompanyParameters companyParameters1, bool trackChange);
+
     }
 }
