@@ -15,6 +15,7 @@ builder.Services.ConfigureContext(builder.Configuration);
 builder.Services.ConfigureRepository();
 builder.Services.ConfigureSwgger();
 builder.Services.ConfigureVersioning();
+builder.Services.AddAuthentication();
 builder.Services.ConfigureIdentity();
 
 
