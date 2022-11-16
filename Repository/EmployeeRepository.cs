@@ -24,6 +24,7 @@ namespace Repository
             var employees = await FindAll(trackChange, e => e.CompanyId.Equals(companyId))
                 .FilterEmployee(employeeParameters.minAge,employeeParameters.maxAge)
                 .Search(employeeParameters.SearchTerm)
+                .Sort(employeeParameters.OrderBy)
                 .OrderBy(e => e.FirstName)
                 .ToListAsync();
 
