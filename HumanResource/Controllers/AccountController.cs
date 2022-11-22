@@ -13,12 +13,14 @@ namespace HumanResource.Controllers
         private readonly ILoggerManager _logger;
         private readonly IMapper _mapper;
         private readonly UserManager<User> _userManager;
+        private readonly IAuthenticationManager _authManager;
 
-        public AccountController(ILoggerManager logger, IMapper mapper,UserManager<User> userManager)
+        public AccountController(ILoggerManager logger, IMapper mapper,UserManager<User> userManager, IAuthenticationManager authManager)
         {
             _logger = logger;
             _mapper = mapper;
             _userManager = userManager;
+            _authManager = authManager;
         }
 
         [HttpPost]
@@ -37,6 +39,18 @@ namespace HumanResource.Controllers
 
             await _userManager.AddToRolesAsync(user, userForregistration.Roles);
             return StatusCode(201);
+        }
+
+        [HttpPost("login")]
+        public async Task<IActionResult> AuthenticateUser([FromBody] UserForAuthenticationFto user)
+        {
+            if (await _authManager.ValidateUser(user))
+                return Ok(new
+                {
+                    Token = await _authManager.Createtoken()
+                }); ;
+            _logger.LogWarn($"{nameof(AuthenticateUser)}: Login failed. Your user name or password is wrong");
+            return Unauthorized();
         }
     }
 }

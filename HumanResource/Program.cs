@@ -1,4 +1,6 @@
 using HumanResource.Extensions;
+using HumanResource.Infrastructure;
+using HumanResource.Utility;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
@@ -18,6 +20,7 @@ builder.Services.ConfigureVersioning();
 builder.Services.AddAuthentication();
 builder.Services.ConfigureIdentity();
 builder.Services.ConfigureJWT(builder.Configuration);
+builder.Services.AddScoped<IAuthenticationManager, AuthenticationManager>();
 
 
 builder.Services.Configure<ApiBehaviorOptions>(options =>
@@ -60,7 +63,7 @@ app.UseForwardedHeaders(new ForwardedHeadersOptions
 });
 app.UseRouting();
 
-app.UseAuthorization();
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseSwagger();
@@ -70,10 +73,10 @@ app.UseSwaggerUI(s =>
     s.SwaggerEndpoint("/swagger/v2/swagger.json", "Human Resource API v2");
 });
 
-app.MapControllers();
-//app.UseEndpoints(endpoints =>
-//{
-//    endpoints.MapControllers();
-//});
+//app.MapControllers();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapControllers();
+});
 
 app.Run();

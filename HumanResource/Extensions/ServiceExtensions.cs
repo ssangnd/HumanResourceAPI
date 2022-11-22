@@ -2,9 +2,11 @@
 using Entities.Models;
 using HumanResource.Controllers;
 using HumanResource.Infrastructure;
+using HumanResource.Utility;
 using LoggerService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Microsoft.AspNetCore.Mvc.Versioning.Conventions;
 using Microsoft.EntityFrameworkCore;
@@ -53,6 +55,7 @@ namespace HumanResource.Extensions
         {
             services.AddTransient(typeof(IRepositoryBase<,>), typeof(RepositoryBase<,>))
                 .AddTransient<IRepositoryManager, RepositoryManager>()
+                //.AddTransient<IAuthenticationManager,AuthenticationManager>()
                 ;
         }
 
@@ -78,12 +81,11 @@ namespace HumanResource.Extensions
             {
                 opt.ReportApiVersions = true;//save versioning reponse header
                 opt.AssumeDefaultVersionWhenUnspecified = true;//if not assume 2 auto 1
-                opt.DefaultApiVersion = new Microsoft.AspNetCore.Mvc.ApiVersion(1, 0);
+                opt.DefaultApiVersion = new ApiVersion(1, 0);
                 opt.ApiVersionReader = new HeaderApiVersionReader("api-version");
-                //opt.Conventions.Controller<CompaniesController>().HasApiVersion(1, 0);
-                //opt.Conventions.Controller<CompaniesV2Controller>().HasApiVersion(2, 0);
+                opt.Conventions.Controller<CompaniesController>().HasApiVersion(new ApiVersion(1,0));
+                opt.Conventions.Controller<CompaniesV2Controller>().HasApiVersion(new ApiVersion(2, 0));
             });
-            services.AddApiVersioning();
         }
 
         public static void ConfigureIdentity(this IServiceCollection services)
